@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Console audit config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "rules"],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "reason", "levels", "match"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "levels": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "enum": ["log", "info", "debug", "warn", "error"]
+            }
+          },
+          "match": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "exact": {
+                "type": "string"
+              },
+              "substring": {
+                "type": "string"
+              },
+              "regex": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["source"],
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "flags": {
+                    "type": "string",
+                    "pattern": "^[dimsuv]*$"
+                  }
+                }
+              }
+            },
+            "minProperties": 1,
+            "maxProperties": 1
+          },
+          "testFiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "origins": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "live": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "failOnUnexpected": {
+      "type": "boolean"
+    },
+    "jsonReport": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "enum": ["compact", "detailed"]
+        },
+        "githubActions": {
+          "enum": ["auto", "on", "off"]
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groups": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "samples": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "messageLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "files": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

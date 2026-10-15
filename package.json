@@ -1,0 +1,54 @@
+{
+  "name": "jest-console-audit-reporter",
+  "version": "0.1.0-alpha.1",
+  "description": "Accountable console filtering and summaries for Jest",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "dist/reporter.js",
+  "types": "dist/types.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/reporter.js"
+    },
+    "./reporter": "./dist/reporter.js",
+    "./environment/node": "./dist/environments/node.js",
+    "./environment/jsdom": "./dist/environments/jsdom.js",
+    "./environment/factory": "./dist/environments/factory.js",
+    "./schema": "./schema/config.schema.json",
+    "./report-schema": "./schema/report.schema.json"
+  },
+  "files": [
+    "dist",
+    "schema",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "docs/compatibility.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && npm run test:types && node --test tests/*.test.cjs",
+    "test:integration": "npm run build && node --test tests/integration/*.test.cjs",
+    "prepack": "npm run build",
+    "test:types": "tsc --strict --noEmit --target ES2019 --moduleResolution node tests/types.test.ts"
+  },
+  "peerDependencies": {
+    "jest": "30.5.2",
+    "jest-environment-node": "30.5.2",
+    "jest-environment-jsdom": "30.5.2"
+  },
+  "peerDependenciesMeta": {
+    "jest-environment-jsdom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "jest": "30.5.2",
+    "jest-environment-node": "30.5.2",
+    "jest-environment-jsdom": "30.5.2"
+  }
+}

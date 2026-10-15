@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+docs/
+.jest-console-audit-reporter/
+*.tgz
+
+# Local fixture artifacts
+artifacts/

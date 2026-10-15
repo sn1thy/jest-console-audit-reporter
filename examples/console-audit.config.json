@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    {
+      "id": "intentional-rejection",
+      "label": "Rejected token",
+      "reason": "Negative authentication tests intentionally warn",
+      "levels": ["warn"],
+      "match": { "exact": "Authentication rejected: invalid token" },
+      "testFiles": ["tests/auth/**/*.test.js"]
+    }
+  ],
+  "display": { "detail": "compact", "githubActions": "auto" },
+  "jsonReport": "artifacts/console-audit.json"
+}

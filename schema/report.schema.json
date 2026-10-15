@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Console audit report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "status",
+    "interrupted",
+    "includesRetries",
+    "health",
+    "capture",
+    "totals",
+    "rules",
+    "unusedRules",
+    "limits"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "runId": {
+      "type": "string"
+    },
+    "status": {
+      "enum": ["complete", "incomplete"]
+    },
+    "interrupted": {
+      "type": "boolean"
+    },
+    "includesRetries": {
+      "const": true
+    },
+    "health": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executions",
+        "scheduledFiles",
+        "capturedFiles",
+        "affectedFiles"
+      ],
+      "properties": {
+        "executions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scheduledFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "capturedFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "affectedFiles": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total",
+        "expected",
+        "unexpected",
+        "levels",
+        "groups",
+        "omittedGroups",
+        "usedRules"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unexpected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "omittedGroups": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "levels": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["log", "info", "debug", "warn", "error"],
+          "properties": {
+            "log": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "info": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "debug": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "warn": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "error": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/group"
+          }
+        },
+        "usedRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "config.schema.json#/properties/rules/items"
+      }
+    },
+    "unusedRules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limits": {
+      "$ref": "config.schema.json#/properties/limits"
+    }
+  },
+  "$defs": {
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "level",
+        "count",
+        "files",
+        "omittedFiles",
+        "samples",
+        "truncated"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "ruleId": {
+          "type": "string"
+        },
+        "level": {
+          "enum": ["log", "info", "debug", "warn", "error"]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "omittedFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "samples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["message", "file"],
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "origin": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
